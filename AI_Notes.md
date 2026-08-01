@@ -6,7 +6,7 @@
 - Used Claude Sonnet-5 High effort model to help with formulating the Overall architecture flow, function differentiation,  JSON schemas and best practises to be followed for the project.
 - From the first generated structural pipeline format idea, I made the following changes:
   - Use JSON files to persist memory across sessions instead of using pure in-memory list.
-  - Despite AI suggesting all the bonus options to be fairly lightweight and doable within the 48 hour deadline, I chose to implement only Docker containarization using Docker file and compose as it was something I was keen on implementing and was also relevant to what I had learnt during my systems design course last semester. Additionally, I found it to be the most impactful given the condition to pick atmost one.
+  - Despite AI suggesting all the bonus options to be fairly lightweight and doable within the 48 hour deadline, I chose to implement only Docker containarization using Docker file as it was something I was keen on implementing and was also relevant to what I had learnt during my systems design course last semester. Additionally, I found it to be the most impactful given the condition to pick atmost one.
 
 ## Stage 2: Development:
 
