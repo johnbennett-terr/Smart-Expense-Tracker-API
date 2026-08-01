@@ -1,7 +1,6 @@
 import json
 import threading
 from pathlib import Path
-from typing import Optional
 
 from src.models import Expense, ExpenseCreate
 
@@ -38,15 +37,17 @@ class ExpenseStorage:
             self._write_all(expenses)
             return record
 
-    def list_all(self, category: Optional[str] = None) -> list[Expense]:
+    def list_all(self, category: str | None = None) -> list[Expense]:
         """Return all expenses, optionally filtered to one category (case-insensitive)."""
         with self._lock:
             expenses = self._read_all()
         if category is not None:
-            expenses = [e for e in expenses if e["category"].lower() == category.lower()]
+            expenses = [
+                e for e in expenses if e["category"].lower() == category.lower()
+            ]
         return [Expense(**e) for e in expenses]
 
-    def get(self, expense_id: int) -> Optional[Expense]:
+    def get(self, expense_id: int) -> Expense | None:
         """Return the expense with the given id, or None if it doesn't exist."""
         with self._lock:
             expenses = self._read_all()

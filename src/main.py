@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
 
@@ -10,7 +9,11 @@ from src.storage import ExpenseStorage
 app = FastAPI(title="Smart Expense Tracker")
 
 _data_file_env = os.environ.get("EXPENSE_DATA_FILE")
-storage = ExpenseStorage(data_file=Path(_data_file_env)) if _data_file_env else ExpenseStorage()
+storage = (
+    ExpenseStorage(data_file=Path(_data_file_env))
+    if _data_file_env
+    else ExpenseStorage()
+)
 
 
 @app.get("/")
@@ -27,7 +30,7 @@ def create_expense(expense: ExpenseCreate):
 
 # Declared before /expenses/{expense_id} so "total" isn't swallowed as an id.
 @app.get("/expenses/total")
-def get_total(category: Optional[str] = Query(default=None)):
+def get_total(category: str | None = Query(default=None)):
     """Return the summed amount of all expenses, optionally filtered by category (case-insensitive)."""
     expenses = storage.list_all(category=category)
     total = sum(e.amount for e in expenses)
@@ -35,7 +38,7 @@ def get_total(category: Optional[str] = Query(default=None)):
 
 
 @app.get("/expenses", response_model=list[Expense])
-def list_expenses(category: Optional[str] = Query(default=None)):
+def list_expenses(category: str | None = Query(default=None)):
     """List all expenses, optionally filtered by category (case-insensitive)."""
     return storage.list_all(category=category)
 

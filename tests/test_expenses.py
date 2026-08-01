@@ -63,7 +63,9 @@ def test_list_expenses_empty(client):
 
 def test_list_and_filter_by_category(client):
     client.post("/expenses", json=VALID_EXPENSE)
-    client.post("/expenses", json={**VALID_EXPENSE, "title": "Bus", "category": "Transport"})
+    client.post(
+        "/expenses", json={**VALID_EXPENSE, "title": "Bus", "category": "Transport"}
+    )
 
     response = client.get("/expenses")
     assert len(response.json()) == 2
@@ -122,7 +124,10 @@ def test_delete_nonexistent_expense_returns_404(client):
 
 def test_total_overall(client):
     client.post("/expenses", json=VALID_EXPENSE)
-    client.post("/expenses", json={**VALID_EXPENSE, "title": "Bus", "category": "Transport", "amount": 2.0})
+    client.post(
+        "/expenses",
+        json={**VALID_EXPENSE, "title": "Bus", "category": "Transport", "amount": 2.0},
+    )
 
     response = client.get("/expenses/total")
     assert response.status_code == 200
@@ -132,7 +137,10 @@ def test_total_overall(client):
 def test_total_by_category(client):
     client.post("/expenses", json=VALID_EXPENSE)
     client.post("/expenses", json={**VALID_EXPENSE, "title": "Lunch", "amount": 10.0})
-    client.post("/expenses", json={**VALID_EXPENSE, "title": "Bus", "category": "Transport", "amount": 2.0})
+    client.post(
+        "/expenses",
+        json={**VALID_EXPENSE, "title": "Bus", "category": "Transport", "amount": 2.0},
+    )
 
     response = client.get("/expenses/total", params={"category": "Food"})
     assert response.status_code == 200
