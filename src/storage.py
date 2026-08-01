@@ -37,7 +37,7 @@ class ExpenseStorage:
         with self._lock:
             expenses = self._read_all()
         if category is not None:
-            expenses = [e for e in expenses if e["category"] == category]
+            expenses = [e for e in expenses if e["category"].lower() == category.lower()]
         return [Expense(**e) for e in expenses]
 
     def get(self, expense_id: int) -> Optional[Expense]:

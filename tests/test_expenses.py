@@ -74,6 +74,16 @@ def test_list_and_filter_by_category(client):
     assert body[0]["category"] == "Food"
 
 
+def test_filter_by_category_is_case_insensitive(client):
+    client.post("/expenses", json=VALID_EXPENSE)  # stored category is "Food"
+
+    response = client.get("/expenses", params={"category": "food"})
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body) == 1
+    assert body[0]["category"] == "Food"
+
+
 def test_filter_by_category_with_no_matches(client):
     client.post("/expenses", json=VALID_EXPENSE)
 
