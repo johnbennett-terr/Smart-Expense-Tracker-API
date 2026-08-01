@@ -56,6 +56,3 @@ class ExpenseStorage:
                 return False
             self._write_all(remaining)
             return True
-
-    def search(self, category: Optional[str] = None) -> list[Expense]:
-        return self.list_all(category=category)
