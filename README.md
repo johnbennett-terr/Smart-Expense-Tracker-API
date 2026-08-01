@@ -70,6 +70,27 @@ pytest
 Each test run uses its own temporary, isolated data file, so tests never
 touch `expenses.json` or affect each other's state.
 
+## Development (optional)
+
+Formatting and linting are optional dev-only steps, kept separate from the
+runtime dependencies. With the virtual environment activated:
+
+```
+pip install -r requirements-dev.txt
+```
+
+Format code with black:
+
+```
+black src/ tests/
+```
+
+Lint code with ruff:
+
+```
+ruff check src/ tests/
+```
+
 ## Running with Docker
 
 Build the image from the project root:
