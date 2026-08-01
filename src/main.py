@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
@@ -6,7 +8,9 @@ from src.models import Expense, ExpenseCreate
 from src.storage import ExpenseStorage
 
 app = FastAPI(title="Smart Expense Tracker")
-storage = ExpenseStorage()
+
+_data_file_env = os.environ.get("EXPENSE_DATA_FILE")
+storage = ExpenseStorage(data_file=Path(_data_file_env)) if _data_file_env else ExpenseStorage()
 
 
 @app.get("/")
